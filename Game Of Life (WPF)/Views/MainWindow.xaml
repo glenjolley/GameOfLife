@@ -4,9 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Game_Of_Life__WPF_"
+        xmlns:converters="clr-namespace:Game_Of_Life__WPF_.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Window.Resources>
+        <converters:CellToBrushConverter x:Key="CellToBrush"/>
+        <converters:CellToForeConverter x:Key="CellToFore"/>
+    </Window.Resources>
+    <Grid DataContext="{Binding}" x:Name="MainGrid">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" Content="Next Generation" Click="Button_Click"/>
+
+        </Grid>
+        <ItemsControl x:Name="UniverseGrid" Grid.Row="1" ItemsSource="{Binding Life}">
+            <ItemsControl.ItemsPanel>
+                <!-- specify the panel that is the container for the items -->
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="{Binding DataContext.Length,ElementName=MainGrid}" Columns="{Binding DataContext.Width,ElementName=MainGrid}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <!-- specify the template used to render each item -->
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+
+                    <TextBlock Background="{Binding Converter={StaticResource CellToBrush}}" Foreground="{Binding Converter={StaticResource CellToFore}}" Text="{Binding AliveNeighbours}"/>
+                    <!-- <Rectangle Fill="{Binding Converter={StaticResource CellToBrush}}"/> -->
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

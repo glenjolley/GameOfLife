@@ -1,6 +1,9 @@
-﻿using System;
+﻿/*
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -47,13 +50,13 @@ namespace Game_Of_Life__WPF_.Models
                     int count = CheckCells(row, col);
                     Cell cell = _currentGeneration[row, col];
 
-                    if ((cell.State && count >= 2 && count <= 3) || (!cell.State && count == 3))
+                    if ((cell.State == CellState.ALIVE && count >= 2 && count <= 3) || (cell.State == CellState.DEAD && count == 3))
                     {
-                        _nextGeneration[row, col] = new Cell(true); // cell alive this next generation
+                        _nextGeneration[row, col] = new Cell(CellState.ALIVE); // cell alive this next generation
                     }
                     else
                     {
-                        _nextGeneration[row, col] = new Cell(false); // cell is dead this generation
+                        _nextGeneration[row, col] = new Cell(CellState.DEAD); // cell is dead this generation
                     }
                 }
             }
@@ -71,9 +74,9 @@ namespace Game_Of_Life__WPF_.Models
             {
                 for (int col = 0; col < _length; col++)
                 {
-                    Console.Write(_currentGeneration[row, col].State ? "O" : " ");
+                    Debug.Write(_currentGeneration[row, col].State);
                 }
-                Console.WriteLine();
+                Debug.WriteLine("");
             }
         }
 
@@ -109,7 +112,7 @@ namespace Game_Of_Life__WPF_.Models
 
                     if (row == j && col == i) continue; //skip the originating cell
 
-                    if (_currentGeneration[rowOffset, colOffset].State)
+                    if (_currentGeneration[rowOffset, colOffset].State == CellState.ALIVE)
 
                     {
                         count++;
@@ -132,3 +135,5 @@ namespace Game_Of_Life__WPF_.Models
 
     }
 }
+
+*/

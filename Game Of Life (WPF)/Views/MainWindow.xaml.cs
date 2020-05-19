@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,13 +27,29 @@ namespace Game_Of_Life__WPF_
 
         public MainWindow()
         {
+            
+            int row = 25;
+            int col = 50;
+            
+            uni = new Universe(row, col, 50);
+
+            this.DataContext = uni;
+
             InitializeComponent();
 
-            uni = new Universe(10, 10, 10);
+        }
 
-            this.DataContext = uni.Grid;
-            
+        public void DoGenerations(int n)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                uni.CalculateGeneration();
+            }
+        }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DoGenerations(1);  
         }
     }
 }

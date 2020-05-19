@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Game_Of_Life__WPF_.Models
 {
+
     public class Cell
     {
         private bool _isAlive;
@@ -16,8 +17,10 @@ namespace Game_Of_Life__WPF_.Models
         public bool State
         {
             get { return _isAlive; }
-            set { _isAlive = State; }
+            set { _isAlive = value; }
         }
+
+        public int AliveNeighbours { get; set; }
 
     }
 }
