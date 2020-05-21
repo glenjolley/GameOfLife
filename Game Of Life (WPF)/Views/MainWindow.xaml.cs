@@ -49,7 +49,7 @@ namespace Game_Of_Life__WPF_
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DoGenerations(1);  
+            uni.ToggleTimer();  
         }
     }
 }

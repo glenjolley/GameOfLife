@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media;
 
 namespace Game_Of_Life__WPF_.Models
 {
@@ -18,6 +19,11 @@ namespace Game_Of_Life__WPF_.Models
         {
             get { return _isAlive; }
             set { _isAlive = value; }
+        }
+
+        public object Brush
+        {
+            get { return _isAlive ? Brushes.Black : Brushes.White; }
         }
 
         public int AliveNeighbours { get; set; }

@@ -11,18 +11,35 @@ namespace Game_Of_Life__WPF_.Converters
 {
     class CellToBrushConverter : IValueConverter
     {
+
+        private static readonly object aliveCell = Brushes.Black;
+        private static readonly object deadCell = Brushes.White;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Cell convertVal = (Cell)value;
+            if (value != null)
+            {
 
-            if (convertVal.State)
-            {
-                return Brushes.Black;
+                Cell convertVal = (Cell)value;
+
+                //    if (convertVal.State)
+                //    {
+                //        return Brushes.Black;
+                //    }
+                //    else
+                //    {
+                //        return Brushes.White;
+                //    }
+                //} else
+                //{
+                //    return Brushes.White;
+                //}
+
+                if (convertVal.State)
+                    return aliveCell;
+
             }
-            else
-            {
-                return Brushes.White;
-            }      
+
+            return deadCell;
 
         }
 
