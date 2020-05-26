@@ -1,15 +1,9 @@
 ﻿using Game_Of_Life__WPF_.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Printing;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Windows;
-using System.Windows.Data;
 
 namespace Game_Of_Life__WPF_.ViewModels
 {
@@ -20,14 +14,11 @@ namespace Game_Of_Life__WPF_.ViewModels
         /// Creates a Game of Life universe accepting Length and Width of the grid
         /// </summary>
 
-        private System.Timers.Timer timer =
-           new System.Timers.Timer(200);
         private int _length;
         private int _width;
         private Grid _next;
         private Grid _current;
         private Random _rand;
-        private ObservableCollection<Cell> _life;
         private Cell[] _flatLife;
         private object tLock = new object();
         private object _lifeLock = new object();
@@ -36,6 +27,7 @@ namespace Game_Of_Life__WPF_.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Constructors
+
 
         public Universe(int length, int width)
         {
@@ -46,11 +38,7 @@ namespace Game_Of_Life__WPF_.ViewModels
             _current = new Grid(length, width);
             _rand = new Random();
 
-            _life = new ObservableCollection<Cell>();
-            //BindingOperations.EnableCollectionSynchronization(Life, _lifeLock);
-
             SeedLife();
-            setupTimer();
 
         }
 
@@ -63,21 +51,13 @@ namespace Game_Of_Life__WPF_.ViewModels
             _current = new Grid(length, width);
             _rand = new Random(seed);
 
-            _life = new ObservableCollection<Cell>();
-            //BindingOperations.EnableCollectionSynchronization(Life, _lifeLock);
-
             SeedLife();
-            setupTimer();
 
         }
 
         #endregion
 
         #region Properties
-        //public ObservableCollection<Cell> Life
-        //{
-        //    get { return _life; }
-        //}
 
         public Cell[] Life
         {
@@ -114,36 +94,9 @@ namespace Game_Of_Life__WPF_.ViewModels
 
         #region Implementation
 
-        private void setupTimer()
-        {
-            timer.Elapsed += (sender2, e2) =>
-            {
-                CalculateGeneration();
-            };
-        }
-
-        public void ToggleTimer()
-        {
-
-            if (timer.Enabled)
-            {
-                timer.Stop();
-            } else
-            {
-                timer.Start();
-            }
-
-        }
-
         private void InitList()
         {
-
             _flatLife = new Cell[_length * _width];
-
-            //for (int i = 0; i < _length * _width; i++)
-            //{
-            //    Life.Add(new Cell(false));
-            //}
         }
 
         private void SeedLife()
@@ -208,11 +161,8 @@ namespace Game_Of_Life__WPF_.ViewModels
             {
                 for (int j = 0; j < _width; j++)
                 {
-                    //_life.Add(_current.GetCell(i, j));
-
+                 
                     lock (_lifeLock) {
-                        //Life[address] = _current.GetCell(i, j);
-                        //_flatLife[address] = _current.GetCell(i, j);
                         if (tempLife[address] == null)
                             tempLife[address] = _current.GetCell(i, j);
                         else
@@ -237,15 +187,14 @@ namespace Game_Of_Life__WPF_.ViewModels
 
             int n = _length / 2;
 
-            //Thread t1 = new Thread(() => CalculateGenerationBetweenRows(0, n));
-            //Thread t2 = new Thread(() => CalculateGenerationBetweenRows(n, _length));
-            CalculateGenerationBetweenRows(0, _length); // debug without threads
+            Thread t1 = new Thread(() => CalculateGenerationBetweenRows(0, n));
+            Thread t2 = new Thread(() => CalculateGenerationBetweenRows(n, _length));
 
-           // t1.Start();
-           // t2.Start();
+            t1.Start();
+            t2.Start();
 
-           // t1.Join();
-           // t2.Join();
+            t1.Join();
+            t2.Join();
 
             FlipGeneration();
 

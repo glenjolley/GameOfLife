@@ -10,8 +10,9 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="9.5*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -19,19 +20,32 @@
                 <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Margin="15">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Current Generation: "/>
-                    <Label Content="{Binding Generation}"/>
+            <Border Grid.Column="0" Margin="10">
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Label Content="Length:"/>
+                    <TextBox Width="50" Height="25" x:Name="txtLength" PreviewTextInput="txtValidation"/>
+                    <Label Content="Width:"/>
+                    <TextBox Width="50" Height="25" x:Name="txtWidth" PreviewTextInput="txtValidation"/>
+                    <TextBlock Width="50"/>
+                    <Border Margin="5">
+                        <Button x:Name="GenerateGrid" Content="Generate Grid" Click="GenerateGrid_Click" Width="90"/>
+                    </Border>
                 </StackPanel>
             </Border>
-            <Border Grid.Column="1" Margin="15">
+            <Border Grid.Column="1" Margin="10">
                 <Button x:Name="ToggleGenButton" Content="Toggle Generations" Click="Button_Click"/>
             </Border>
         </Grid>
-        
+
         <UniformGrid Grid.Row="1" x:Name="LifeGrid"/>
-        
+
+        <Border Grid.Row="2" Margin="1">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Current Generation: "/>
+                <Label x:Name="lblGeneration"/>
+            </StackPanel>
+        </Border>
+    
     </Grid>
     
     
