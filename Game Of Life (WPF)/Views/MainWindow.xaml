@@ -7,7 +7,36 @@
         xmlns:converters="clr-namespace:Game_Of_Life__WPF_.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Margin="15">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Current Generation: "/>
+                    <Label Content="{Binding Generation}"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" Margin="15">
+                <Button x:Name="ToggleGenButton" Content="Toggle Generations" Click="Button_Click"/>
+            </Border>
+        </Grid>
+        
+        <UniformGrid Grid.Row="1" x:Name="LifeGrid"/>
+        
+    </Grid>
+    
+    
+    
+    <!--<Window.Resources>
         <converters:CellToBrushConverter x:Key="CellToBrush"/>
     </Window.Resources>
     <Grid DataContext="{Binding}" x:Name="MainGrid">
@@ -18,7 +47,7 @@
         </Grid.RowDefinitions>
         <Border Margin="7" Grid.Row="0">
         
-            <!-- Top bar -->
+            --><!-- Top bar --><!--
             <Grid Grid.Row="0">
             
             <Grid.ColumnDefinitions>
@@ -39,23 +68,23 @@
             </Grid>
         </Border>
         
-        <!-- Life Grid -->
+        --><!-- Life Grid --><!--
         
         <ItemsControl x:Name="UniverseGrid" Grid.Row="1" ItemsSource="{Binding Life}">
             <ItemsControl.ItemsPanel>
-                <!-- specify the panel that is the container for the items -->
+                --><!-- specify the panel that is the container for the items --><!--
                 <ItemsPanelTemplate>
                     <UniformGrid Rows="{Binding DataContext.Length,ElementName=MainGrid}" Columns="{Binding DataContext.Width,ElementName=MainGrid}" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <!-- specify the template used to render each item -->
+            --><!-- specify the template used to render each item --><!--
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
 
-                    <!-- <TextBlock Background="{Binding Converter={StaticResource CellToBrush}}" Foreground="{Binding Converter={StaticResource CellToFore}}" Text="{Binding AliveNeighbours}"/> -->
+                    --><!-- <TextBlock Background="{Binding Converter={StaticResource CellToBrush}}" Foreground="{Binding Converter={StaticResource CellToFore}}" Text="{Binding AliveNeighbours}"/> --><!--
                     <Rectangle Fill="{Binding Brush}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </Grid>
+    </Grid>-->
 </Window>
